@@ -1,0 +1,4 @@
+*.zip
+*.weights
+*.pth
+/cfg/darknet19_448.conv.23
