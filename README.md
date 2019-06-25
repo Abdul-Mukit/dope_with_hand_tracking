@@ -13,8 +13,6 @@ I uploaded the necessary weights in my [Dropbox](https://www.dropbox.com/sh/hv44
 
 Put the 'backup' folder in the project direcory. 
 
-Put the 'darknet19_448.conv.23' inside 'cfg' folder.
-
 ## Installation
 Please follow instructions for [DOPE](https://github.com/NVlabs/Deep_Object_Pose).
 
