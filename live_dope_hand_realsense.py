@@ -122,7 +122,7 @@ def adjust_gamma(image, gamma=1.0):
 #######################################################
 # Settings
 #######################################################
-exposure_val = 166
+exposure_val = 166 # 166 is the default exposure value.
 use_hand_tracking = True
 gamma_correction = False
 
