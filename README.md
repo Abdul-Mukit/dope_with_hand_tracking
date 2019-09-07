@@ -33,9 +33,9 @@ room like environment.
 
 In order to overcome these problems in this project, I tried out merging 3 different methods. 
 To rectify the dark image (due to low exposure settings of camera) I added 
-a gamma correction methods which makes the image brigher. Following are two images 
-demostrating the gamma correction effect. Notice how the image gets
-brigher on the right after gamma correction. The performance jump due to gamma correction is very 
+a gamma correction methods which makes the image brigher. Following are two captured images 
+before and after the gamma correction respectively. Notice how the image gets
+brigher after gamma correction. The performance jump due to gamma correction is very 
 clear. [A demonstraion of the gammar correction and how
 it helps tracking hands in the dark is demonstrated in this video](https://youtu.be/Khy8U_zXDC4).
 
