@@ -20,10 +20,11 @@ cautery in surgical lighting. A cautery is a electronic knife like tool
 that looks like a pen. It is used to make cuts during surgery and is a
 very extensively used tool.
 
-<br />
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlcHBUCwIrRFSLxGSz7Ss9m2lp9JIoPZ-uDrmKq_o9VnWj4bHqDg" alt="Cautery tool" height="200">
-<img src="https://www.anesplus.com/wp-content/uploads/2018/02/live-surgical-operation.jpg" alt="Surgical Lighting" height="200">
-<br />
+<img
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlcHBUCwIrRFSLxGSz7Ss9m2lp9JIoPZ-uDrmKq_o9VnWj4bHqDg"
+alt="Cautery tool" height="200"><img
+src="https://www.anesplus.com/wp-content/uploads/2018/02/live-surgical-operation.jpg"
+alt="Surgical Lighting" height="200">
 
 As part of my research on Augmented Surgical Reality, I investigate the
 usability of existing 6DoF object pose estimation methods such as Deep
@@ -45,17 +46,18 @@ room like environment.
 In order to overcome these problems in this project, I tried out merging
 3 different methods. To rectify the dark image (due to low exposure
 settings of camera) I added a gamma correction methods which makes the
-image brigher. Following are two captured images before and after the
-gamma correction respectively. Notice how the image gets brigher after
-gamma correction. The performance jump due to gamma correction is very
-clear. [A demonstraion of the gammar correction and how
+image brighter. Following are two captured images before and after the
+gamma correction respectively. Notice how the image gets brighter after
+gamma correction. [A demonstration of the gamma correction and how
 it helps tracking hands in the dark is demonstrated in this video](https://youtu.be/Khy8U_zXDC4).
 
-![Before Gamma Correcti on](before_gamma.jpg)
-![After Gamma Correction](after_gamma.jpg)
-<br/>
 
-I trained YOLO2 to track hands. Follwoing is a demo image of hand
+<img src="before_gamma.jpg" alt="Before Gamma Correction"
+height="300"><img src="after_gamma.jpg" alt="After Gamma Correction"
+height="300">
+
+
+I trained YOLO2 to track hands. Following is a demo image of hand
 tracking using YOLO2. I trained my own weights for hand tracking instead
 of using the existing hand-trackers. That is because **existing
 hand-trackers track only bare hands without gloves**. If there are
@@ -104,13 +106,13 @@ I have changed the codes so that it can work with 0.4.0 which DOPE uses.
 I have used an Intel Realsense D435i camera for this implementation as I
 needed to control exposure.
 
-live_dope_hand_realsense.py is the final impelmentation. In the code
+live_dope_hand_realsense.py is the final implementation. In the code
 change the "Settings" section if needed. Please watch my
 [demo video](https://youtu.be/XwVy5sZZxG8) for more details.
 
 live_dope_realsense.py and live_dope_webcam.py are just DOPE demos using
 the realsense camera and webcam respectively. The original DOPE demos
-are using ROS. I needed a smipler demo so I made these two.
+are using ROS. I needed a simple demo so I made these two.
 
 
 
