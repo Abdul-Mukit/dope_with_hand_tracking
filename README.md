@@ -43,6 +43,7 @@ such a low level that neither YOLO2 nor DOPE is able to detect anything
 This all makes it very challenging to track a cautery pen in operation
 room like environment.
 
+### My Contribution
 In order to overcome these problems in this project, I tried out merging
 3 different methods. To rectify the dark image (due to low exposure
 settings of camera) I added a gamma correction methods which makes the
