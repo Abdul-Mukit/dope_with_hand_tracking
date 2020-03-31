@@ -101,6 +101,7 @@ Please follow instructions for
 [DOPE](https://github.com/NVlabs/Deep_Object_Pose).
 
 I have included the requirements.txt file from the original DOPE repo.
+Here is a demo for [installation](https://youtu.be/ztg6-Ykefs8).
 
 The original pytorch-yolo2 was workable only with PyTorch version 0.3.1.
 I have changed the codes so that it can work with 0.4.0 which DOPE uses. 
