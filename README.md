@@ -100,6 +100,8 @@ Put the 'backup' folder in the project direcory.
 Please follow instructions for
 [DOPE](https://github.com/NVlabs/Deep_Object_Pose).
 
+I have included the requirements.txt file from the original DOPE repo.
+
 The original pytorch-yolo2 was workable only with PyTorch version 0.3.1.
 I have changed the codes so that it can work with 0.4.0 which DOPE uses. 
 
@@ -111,9 +113,18 @@ live_dope_hand_realsense.py is the final implementation. In the code
 change the "Settings" section if needed. Please watch my
 [demo video](https://youtu.be/XwVy5sZZxG8) for more details.
 
+live_dope_hand_webcam.py is implementation with webcam. In the code
+change the "Settings" section if needed. The only difference between
+this one and the realsense one is that, the webcam doesn't have exposure
+control. Here is a [demo video](https://youtu.be/ALM1xlsT_1A).
+
 live_dope_realsense.py and live_dope_webcam.py are just DOPE demos using
 the realsense camera and webcam respectively. The original DOPE demos
 are using ROS. I needed a simple demo so I made these two.
+
+Please comment/uncomment weights in my_config_realsense.yaml and
+my_config_webcam.yaml files for selecting which object you want to
+detect.
 
 
 

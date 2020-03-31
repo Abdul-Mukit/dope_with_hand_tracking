@@ -73,7 +73,7 @@ def DrawCube(points, color=(255, 0, 0)):
 
 # Settings
 config_name = "my_config_realsense.yaml"
-exposure_val = 166
+exposure_val = 500
 
 
 yaml_path = 'cfg/{}'.format(config_name)
@@ -185,7 +185,8 @@ with open(yaml_path, 'r') as stream:
 
 
         cv2.imshow('Open_cv_image', open_cv_image)
-        cv2.waitKey(1)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
         # t_end = time.time()
         # print(1/(t_end-t_start))
 

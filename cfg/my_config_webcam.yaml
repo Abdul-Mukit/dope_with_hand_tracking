@@ -2,14 +2,15 @@
 
 # Comment any of these lines to prevent detection / pose estimation of that object
 weights: {
-    # "cracker":"cracker_60.pth",
-    # "gelatin":"gelatin_60.pth",
-    # "meat":"meat_20.pth",
-    # "mustard":"mustard_60.pth",
-    # "soup":"soup_60.pth",
-    #"sugar":"sugar_60.pth",
-    #"cautery":"net_epoch_217.pth" # The 48 hour model
-     "cautery":"cautery_s6_60.pth"
+#    "cracker":"cracker_60.pth",
+#    "gelatin":"gelatin_60.pth",
+#    "mustard":"mustard_60.pth",
+#    "soup":"soup_60.pth",
+#    "sugar":"sugar_60.pth",
+#    "meat":"meat_20.pth"
+#    "cautery":"cautery_s6_60.pth" # Uncomment for cautery detection only
+    "cautery_hand":"net_hc1_60_v1.pth" # Uncomment for cautery-hand detection
+                                        # Use either net_hc1_60_v1.pth or net_hc1_60_v2.pth. v1 is better
 }
 
 # Cuboid dimension in cm x,y,z
@@ -20,6 +21,7 @@ dimensions: {
     "mustard": [9.6024150848388672,19.130100250244141,5.824894905090332],
     "soup": [6.7659378051757813,10.185500144958496,6.771425724029541],
     "sugar": [9.267730712890625,17.625339508056641,4.5134143829345703],
+    "cautery_hand": [ 12, 25, 14 ],
     "cautery": [ 1.2000000476837158, 22.200000762939453, 1.2000000476837158 ]
 }
 
@@ -30,6 +32,7 @@ draw_colors: {
     "mustard": [217,12, 232],  # magenta
     "soup": [255, 101, 0],  # orange
     "sugar": [232, 222, 12],  # yellow
+    "cautery_hand": [232, 222, 12],  # yellow
     "cautery": [232, 222, 12]  # yellow
 }
 
@@ -45,8 +48,14 @@ camera_settings: {
     "cy": 240.0
 }
 
-# Config params for DOPE
-thresh_angle: 0.5
-thresh_map: 0.01
-sigma: 3
-thresh_points: 0.1
+## Config params for DOPE
+#thresh_angle: 0.5
+#thresh_map: 0.01
+#sigma: 3
+#thresh_points: 0.1
+
+## My Config
+thresh_angle: 0.9
+thresh_map: 0.0090
+sigma: 2.75
+thresh_points: 0.01

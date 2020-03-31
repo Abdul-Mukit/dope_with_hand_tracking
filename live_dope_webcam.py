@@ -132,15 +132,6 @@ with open(yaml_path, 'r') as stream:
                 dist_coeffs=dist_coeffs
             )
 
-    # RealSense Start
-    pipeline = rs.pipeline()
-    config = rs.config()
-    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-    profile = pipeline.start(config)
-    # Setting exposure
-    s = profile.get_device().query_sensors()[1]
-    s.set_option(rs.option.exposure, exposure_val)
-
     cap = cv2.VideoCapture(0)
 
     while True:
@@ -181,7 +172,8 @@ with open(yaml_path, 'r') as stream:
 
 
         cv2.imshow('Open_cv_image', open_cv_image)
-        cv2.waitKey(1)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 
 

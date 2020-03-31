@@ -122,9 +122,8 @@ def adjust_gamma(image, gamma=1.0):
 #######################################################
 # Settings
 #######################################################
-exposure_val = 1000 # 166 is the default exposure value (1-10000)
 use_hand_tracking = True
-gamma_correction = False
+gamma_correction = False # Always False in case of webcam. I don't have exposure control in webcam
 
 hand_crop_size = [200, 200]
 pose_conf_thresh = 0.5
@@ -133,14 +132,13 @@ gamma_val = 2
 
 test_width = 640
 test_height = 480
-fps = 30
 
 use_cuda = True
 
 datacfg = {'hands':   'cfg/hands.data'}
 
 cfgfile = {'hands':   'cfg/yolo-hands.cfg',
-           'cautery': 'cfg/my_config_realsense.yaml'}
+           'cautery': 'cfg/my_config_webcam.yaml'} #
 
 weightfile = {'hands':   'backup/hands/000500.weights'}
 
@@ -219,28 +217,16 @@ with open(yaml_path, 'r') as stream:
             )
 
 #######################################################
-# Setting up Intel RealSense Camera
+# Running webcam and processing
 #######################################################
-pipeline = rs.pipeline()
-config = rs.config()
-config.enable_stream(rs.stream.color, test_width, test_height, rs.format.bgr8, fps)
-profile = pipeline.start(config)
-# Setting exposure
-s = profile.get_device().query_sensors()[1]
-s.set_option(rs.option.exposure, exposure_val)
 
-#######################################################
-# Running camera and processing
-#######################################################
+cap = cv2.VideoCapture(0)
+
 while True:
     # Reading image from camera
     t_start = time.time()
-    frames = pipeline.wait_for_frames()
-    color_frame = frames.get_color_frame()
-    if not color_frame:
-        continue
-    img = np.asanyarray(color_frame.get_data())
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Converting image to RGB as DOPE expects RGB. YOLO is trained to invariant.
+    ret, img = cap.read()
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     # Gamma(Optional) Correction
     if gamma_correction:
@@ -306,6 +292,7 @@ while True:
 
 
     cv2.imshow('Open_cv_image', img_draw)
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     t_end = time.time()
