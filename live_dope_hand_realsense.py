@@ -81,11 +81,11 @@ def crop_image(image, center, newSize, plot=False):
     w_new, h_new = newSize
     h_org, w_org, ch = image.shape
 
-    x_start = x_center - w_new/2
-    x_end = x_center + w_new/2
+    x_start = x_center - int(w_new/2)
+    x_end = x_center + int(w_new/2)
 
-    y_start = y_center - h_new/2
-    y_end = y_center + h_new/2
+    y_start = y_center - int(h_new/2)
+    y_end = y_center + int(h_new/2)
 
     if x_start < 0:
         x_end   += abs(x_start)
