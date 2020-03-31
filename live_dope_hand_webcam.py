@@ -226,7 +226,10 @@ while True:
     # Reading image from camera
     t_start = time.time()
     ret, img = cap.read()
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    if ret:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    else:
+        continue
 
     # Gamma(Optional) Correction
     if gamma_correction:

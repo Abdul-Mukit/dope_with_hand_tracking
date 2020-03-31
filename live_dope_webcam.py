@@ -137,7 +137,10 @@ with open(yaml_path, 'r') as stream:
     while True:
         # Reading image from camera
         ret, img = cap.read()
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        if ret:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        else:
+            continue
 
         # Copy and draw image
         img_copy = img.copy()

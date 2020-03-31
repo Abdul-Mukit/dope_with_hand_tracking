@@ -126,6 +126,11 @@ Please comment/uncomment weights in my_config_realsense.yaml and
 my_config_webcam.yaml files for selecting which object you want to
 detect.
 
+## Debug:
+One problem I was facing was that my computer was not detecting webcam
+while it was being connected to the realsense camera. After wasting a
+lot of time, I realized the solution is to just connect one camera at a
+time. Weird problem.
 
 
 
