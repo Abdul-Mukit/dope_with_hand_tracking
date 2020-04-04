@@ -237,7 +237,7 @@ class ModelData(object):
         print("Loading DOPE model '{}'...".format(path))
         net = DopeNetwork()
         net = torch.nn.DataParallel(net, [0]).cuda()
-        net.load_state_dict(torch.load(path))
+        net.load_state_dict(torch.load(path, map_location='cuda:0'))
         net.eval()
         print('    Model loaded in {} seconds.'.format(
             time.time() - model_loading_start_time))
