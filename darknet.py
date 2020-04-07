@@ -4,7 +4,6 @@ import torch.nn.functional as F
 import numpy as np
 from region_loss import RegionLoss
 from cfg import *
-#from layers.batchnorm.bn import BN2d
 
 class MaxPoolStride1(nn.Module):
     def __init__(self):
