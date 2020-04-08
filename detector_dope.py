@@ -37,8 +37,8 @@ from cuboid_pnp_solver import *
 
 #global transform for image input
 transform = transforms.Compose([
-    # transforms.Scale(IMAGE_SIZE),
-    # transforms.CenterCrop((imagesize,imagesize)),
+    #transforms.Resize(608,400),
+    #transforms.CenterCrop(400),
     transforms.ToTensor(),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
     ])
@@ -237,7 +237,7 @@ class ModelData(object):
         print("Loading DOPE model '{}'...".format(path))
         net = DopeNetwork()
         net = torch.nn.DataParallel(net, [0]).cuda()
-        net.load_state_dict(torch.load(path, map_location='cuda:0'))
+        net.load_state_dict(torch.load(path,map_location='cuda:0'))
         net.eval()
         print('    Model loaded in {} seconds.'.format(
             time.time() - model_loading_start_time))
@@ -328,7 +328,7 @@ class ObjectDetector(object):
                                 )
             peaks = zip(np.nonzero(peaks_binary)[1], np.nonzero(peaks_binary)[0]) 
             
-            # Computing the weigthed average for localizing the peaks
+            # Computing the weighted average for localizing the peaks
             peaks = list(peaks)
             win = 5
             ran = win // 2

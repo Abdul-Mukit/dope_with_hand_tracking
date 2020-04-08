@@ -48,12 +48,14 @@ class CuboidPNPSolver(object):
         if pnp_algorithm is None:
             if CuboidPNPSolver.cv2majorversion == 2:
                 pnp_algorithm = cv2.CV_ITERATIVE
-            elif CuboidPNPSolver.cv2majorversion == 3:
-                pnp_algorithm = cv2.SOLVEPNP_ITERATIVE
+            elif CuboidPNPSolver.cv2majorversion >= 3:
+                pnp_algorithm = cv2.SOLVEPNP_EPNP
                 # Alternative algorithms:
-                # pnp_algorithm = SOLVE_PNP_P3P  
-                # pnp_algorithm = SOLVE_PNP_EPNP        
+                # pnp_algorithm = SOLVEPNP_P3P
+                # pnp_algorithm = SOLVEPNP_EPNP
+                # pnp_algorithm = SOLVEPNP_ITERATIVE Also consider _UPNP _DLS _AP3P and _IPPE _IPPE_SQUARE per applications
         
+
         location = None
         quaternion = None
         projected_points = cuboid2d_points
@@ -85,7 +87,7 @@ class CuboidPNPSolver(object):
                 obj_2d_points,
                 self._camera_intrinsic_matrix,
                 self._dist_coeffs,
-                flags=pnp_algorithm
+                flags=cv2.SOLVEPNP_EPNP
             )
 
             if ret:

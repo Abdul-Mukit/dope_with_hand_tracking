@@ -1,0 +1,19 @@
+cap = cv2.VideoCapture(0)
+
+    while True:
+        # Reading image from camera
+        ret, img = cap.read()
+
+    #Get Corners
+    retval, corners = cv2.findChessboardCorners(img, (5,5), flags=0) #(5,5) is the size of the inner borders in your chessboard pattern
+
+    #Sub-pixel define corners
+    cv2.cornerSubPix(img, corners, (640,360), (-1,-1), criteria.maxCount=5)
+
+    #
+
+
+
+cv2.imshow('Open_cv_image', open_cv_image)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break

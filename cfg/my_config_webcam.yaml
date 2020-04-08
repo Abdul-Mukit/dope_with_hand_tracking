@@ -8,7 +8,7 @@ weights: {
 #    "soup":"soup_60.pth",
 #    "sugar":"sugar_60.pth",
 #    "meat":"meat_20.pth"
-#    "cautery":"cautery_s6_60.pth" # Uncomment for cautery detection only
+    #"cautery":"cautery_s6_60.pth" # Uncomment for cautery detection only
     "cautery_hand":"net_hc1_60_v1.pth" # Uncomment for cautery-hand detection
                                         # Use either net_hc1_60_v1.pth or net_hc1_60_v2.pth. v1 is better
 }
@@ -21,7 +21,7 @@ dimensions: {
     "mustard": [9.6024150848388672,19.130100250244141,5.824894905090332],
     "soup": [6.7659378051757813,10.185500144958496,6.771425724029541],
     "sugar": [9.267730712890625,17.625339508056641,4.5134143829345703],
-    "cautery_hand": [ 12, 25, 14 ],
+    "cautery_hand": [ 8.1, 15, 10 ],
     "cautery": [ 1.2000000476837158, 22.200000762939453, 1.2000000476837158 ]
 }
 
@@ -32,20 +32,41 @@ draw_colors: {
     "mustard": [217,12, 232],  # magenta
     "soup": [255, 101, 0],  # orange
     "sugar": [232, 222, 12],  # yellow
-    "cautery_hand": [232, 222, 12],  # yellow
+    "cautery_hand": [232, 222, 0],  # yellow
     "cautery": [232, 222, 12]  # yellow
 }
 
 # Camera intrinsics 
 #(Logitech C920)
 camera_settings: {
-    "name": "logitech_c920",
+#    "name": "logitech_c920",
+#    "width": 640,
+#    "height": 480,
+#    "fx": 641.5,
+#    "fy": 641.5,
+#    "cx": 320.0,
+#    "cy": 240.0
+
+#(Webcam)
+
+    "name": "Webcam",
     "width": 640,
     "height": 480,
-    "fx": 641.5,
-    "fy": 641.5,
-    "cx": 320.0,
-    "cy": 240.0
+    "fx": 525.273,
+    "fy": 525.317,
+    "cx": 334.901,
+    "cy": 202.638,
+    "dist-coeffs": [[ 8.03169753e-01 -3.11084671e+01 -1.54783884e-02 3.18399532e-03 3.34847100e+02]]
+
+#(Kinect4A)
+#    "name": "Kinect4A",
+#    "width": 1280,
+#    "height": 720
+#    "fx": 630.078,
+#    "fy": 631.221,
+#    "cx": 635.839,
+#    "cy": 358.327,
+#    "dist-coeffs": [[ 0.10457311 -0.05741356 -0.00658954  0.00052138 -0.0464481 ]]
 }
 
 ## Config params for DOPE
@@ -58,4 +79,4 @@ camera_settings: {
 thresh_angle: 0.9
 thresh_map: 0.0090
 sigma: 2.75
-thresh_points: 0.01
+thresh_points: 0.05

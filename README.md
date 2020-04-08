@@ -101,7 +101,6 @@ Please follow instructions for
 [DOPE](https://github.com/NVlabs/Deep_Object_Pose).
 
 I have included the requirements.txt file from the original DOPE repo.
-Here is a demo for [installation](https://youtu.be/ztg6-Ykefs8).
 
 The original pytorch-yolo2 was workable only with PyTorch version 0.3.1.
 I have changed the codes so that it can work with 0.4.0 which DOPE uses. 
@@ -127,11 +126,6 @@ Please comment/uncomment weights in my_config_realsense.yaml and
 my_config_webcam.yaml files for selecting which object you want to
 detect.
 
-## Debug:
-One problem I was facing was that my computer was not detecting webcam
-while it was being connected to the realsense camera. After wasting a
-lot of time, I realized the solution is to just connect one camera at a
-time. Weird problem.
 
 
 

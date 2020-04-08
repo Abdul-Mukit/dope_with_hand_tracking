@@ -4,7 +4,7 @@ from cuboid import *
 from detector_dope import *
 import yaml
 
-import pyrealsense2 as rs
+#import pyrealsense2 as rs
 
 from PIL import Image
 from PIL import ImageDraw
@@ -125,7 +125,7 @@ def adjust_gamma(image, gamma=1.0):
 use_hand_tracking = True
 gamma_correction = False # Always False in case of webcam. I don't have exposure control in webcam
 
-hand_crop_size = [200, 200]
+hand_crop_size = [224, 224]
 pose_conf_thresh = 0.5
 hand_conf_thresh = 0.6
 gamma_val = 2
@@ -226,10 +226,7 @@ while True:
     # Reading image from camera
     t_start = time.time()
     ret, img = cap.read()
-    if ret:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    else:
-        continue
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     # Gamma(Optional) Correction
     if gamma_correction:
@@ -238,7 +235,7 @@ while True:
     # YOLO stuff
     if use_hand_tracking:
         sized = cv2.resize(img, (model_hand.width, model_hand.height))
-        bboxes = uyolo.do_detect(model_hand, sized, hand_conf_thresh, 0.4, use_cuda)
+        bboxes = uyolo.do_detect(model_hand, sized, hand_conf_thresh, 0.42, use_cuda)
         if any(bboxes):
             center = [int(bboxes[0][0] * test_width), int(bboxes[0][1] * test_height)]
             img_hand_cropped, crop_box = crop_image(img, center, hand_crop_size)

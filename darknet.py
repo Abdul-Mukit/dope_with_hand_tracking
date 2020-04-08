@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 from region_loss import RegionLoss
 from cfg import *
+#from layers.batchnorm.bn import BN2d
 
 class MaxPoolStride1(nn.Module):
     def __init__(self):
@@ -28,10 +29,10 @@ class Reorg(nn.Module):
         assert(W % stride == 0)
         ws = stride
         hs = stride
-        x = x.view(B, C, H//hs, hs, W//ws, ws).transpose(3,4).contiguous()
-        x = x.view(B, C, H//hs*W//ws, hs*ws).transpose(2,3).contiguous()
-        x = x.view(B, C, hs*ws, H//hs, W//ws).transpose(1,2).contiguous()
-        x = x.view(B, hs*ws*C, H//hs, W//ws)
+        x = x.view(B, C, int(H/hs), hs, int(W/ws), ws).transpose(3,4).contiguous()
+        x = x.view(B, C, int(H/hs)*int(W/ws), hs*ws).transpose(2,3).contiguous()
+        x = x.view(B, C, hs*ws, int(H/hs), int(W/ws)).transpose(1,2).contiguous()
+        x = x.view(B, hs*ws*C, int(H/hs), int(W/ws))
         return x
 
 class GlobalAvgPool2d(nn.Module):
@@ -145,7 +146,10 @@ class Darknet(nn.Module):
                 kernel_size = int(block['size'])
                 stride = int(block['stride'])
                 is_pad = int(block['pad'])
-                pad = int((kernel_size-1)/2 if is_pad else 0)
+                if is_pad:
+                    pad = int((kernel_size - 1) / 2)
+                else:
+                    pad = 0
                 activation = block['activation']
                 model = nn.Sequential()
                 if batch_normalize:
