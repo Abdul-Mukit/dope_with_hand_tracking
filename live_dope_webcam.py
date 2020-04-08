@@ -44,30 +44,30 @@ def DrawCube(points, color=(255, 0, 0)):
     lineWidthForDrawing = 2
 
     # draw front
-    DrawLine(points[0], points[1], color, lineWidthForDrawing)
-    DrawLine(points[1], points[2], color, lineWidthForDrawing)
-    DrawLine(points[3], points[2], color, lineWidthForDrawing)
-    DrawLine(points[3], points[0], color, lineWidthForDrawing)
+    DrawLine(points[0], points[1], color, 3)
+    DrawLine(points[1], points[2], color, 3)
+    DrawLine(points[3], points[2], color, 3)
+    DrawLine(points[3], points[0], color, 3)
 
     # draw back
-    DrawLine(points[4], points[5], color, lineWidthForDrawing)
-    DrawLine(points[6], points[5], color, lineWidthForDrawing)
-    DrawLine(points[6], points[7], color, lineWidthForDrawing)
-    DrawLine(points[4], points[7], color, lineWidthForDrawing)
+    DrawLine(points[4], points[5], color, 1)
+    DrawLine(points[6], points[5], color, 1)
+    DrawLine(points[6], points[7], color, 1)
+    DrawLine(points[4], points[7], color, 1)
 
     # draw sides
-    DrawLine(points[0], points[4], color, lineWidthForDrawing)
-    DrawLine(points[7], points[3], color, lineWidthForDrawing)
-    DrawLine(points[5], points[1], color, lineWidthForDrawing)
-    DrawLine(points[2], points[6], color, lineWidthForDrawing)
+    DrawLine(points[0], points[4], color, 2)
+    DrawLine(points[7], points[3], color, 2)
+    DrawLine(points[5], points[1], color, 2)
+    DrawLine(points[2], points[6], color, 2)
 
     # draw dots
     DrawDot(points[0], pointColor=color, pointRadius=4)
     DrawDot(points[1], pointColor=color, pointRadius=4)
 
     # draw x on the top
-    DrawLine(points[0], points[5], color, lineWidthForDrawing)
-    DrawLine(points[1], points[4], color, lineWidthForDrawing)
+    DrawLine(points[0], points[5], color, 1)
+    DrawLine(points[1], points[4], color, 1)
 
 
 # Settings
@@ -162,6 +162,7 @@ with open(yaml_path, 'r') as stream:
                     continue
                 loc = result["location"]
                 ori = result["quaternion"]
+                print("location ", loc, "quaternion ", ori)
 
                 # Draw the cube
                 if None not in result['projected_points']:

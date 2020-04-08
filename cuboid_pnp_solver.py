@@ -48,7 +48,7 @@ class CuboidPNPSolver(object):
         if pnp_algorithm is None:
             if CuboidPNPSolver.cv2majorversion == 2:
                 pnp_algorithm = cv2.CV_ITERATIVE
-            elif CuboidPNPSolver.cv2majorversion == 3:
+            elif CuboidPNPSolver.cv2majorversion >= 3:
                 pnp_algorithm = cv2.SOLVEPNP_ITERATIVE
                 # Alternative algorithms:
                 # pnp_algorithm = SOLVE_PNP_P3P  

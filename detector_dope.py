@@ -328,7 +328,7 @@ class ObjectDetector(object):
                                 )
             peaks = zip(np.nonzero(peaks_binary)[1], np.nonzero(peaks_binary)[0]) 
             
-            # Computing the weigthed average for localizing the peaks
+            # Computing the weighted average for localizing the peaks
             peaks = list(peaks)
             win = 5
             ran = win // 2

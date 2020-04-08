@@ -125,7 +125,7 @@ def adjust_gamma(image, gamma=1.0):
 use_hand_tracking = True
 gamma_correction = False # Always False in case of webcam. I don't have exposure control in webcam
 
-hand_crop_size = [200, 200]
+hand_crop_size = [224, 224]
 pose_conf_thresh = 0.5
 hand_conf_thresh = 0.6
 gamma_val = 2
