@@ -135,28 +135,28 @@ vid_paths = ["/media/mukit/Transcend/Datasets/Azure Kinect Captures 1/outputAuto
              "/media/mukit/Transcend/Datasets/Azure Kinect Captures 1/outputE10.mkv"
              ]
 
-input_resize_width = 1280
-input_resize_height = 720
+input_resize_width = 853
+input_resize_height = 480
 
-bright_crop_size = (480, 480)
+bright_crop_size = (400, 400)
 roi_radius = 201
 
 txt_size = 0.7
 txt_line_width = 2
 
 
-out_vid_names = ["outputAutoExposure_bright_" + str(input_resize_height) + ".avi",
-                 "E8_bright_" + str(input_resize_height) + ".avi",
-                 "E9_bright_" + str(input_resize_height) + ".avi",
-                 "E9a_bright_" + str(input_resize_height) + ".avi",
-                 "E9b_bright_" + str(input_resize_height) + ".avi",
-                 "E10_bright_" + str(input_resize_height) + ".avi"
+out_vid_names = ["outputAutoExposure_" + str(input_resize_height) + ".avi",
+                 "E8_" + str(input_resize_height) + ".avi",
+                 "E9_" + str(input_resize_height) + ".avi",
+                 "E9a_" + str(input_resize_height) + ".avi",
+                 "E9b_" + str(input_resize_height) + ".avi",
+                 "E10_" + str(input_resize_height) + ".avi"
                  ]
 
 use_hand_tracking = False
 gamma_correction = False  # Always False in case of webcam. I don't have exposure control in webcam
 print_detections = True
-detect_bright_roi = True
+detect_bright_roi = False
 
 hand_crop_size = [224, 224]
 pose_conf_thresh = 0.5
@@ -340,7 +340,11 @@ for vid_path, out_vid_name in zip(vid_paths, out_vid_names):
             img[bright_crop_box[2]:bright_crop_box[3], bright_crop_box[0]:bright_crop_box[1], :] = img_draw
             img_draw = img
             cv2.rectangle(img_draw, (bright_crop_box[0], bright_crop_box[2]),
-                          (bright_crop_box[1], bright_crop_box[3]), color=(255, 0, 0))
+                          (bright_crop_box[1], bright_crop_box[3]), color=(255, 255, 255))
+            text = "ROI Crop: " + str(bright_crop_size)
+            text_postion = (bright_crop_box[0], bright_crop_box[2])
+            cv2.putText(img_draw, text, text_postion, font, 0.3, (0, 255, 0), 1, cv2.LINE_AA)
+
 
         # Printing texts (on cropped image, if bright or yolo crop selected)
         if print_detections:
@@ -354,8 +358,12 @@ for vid_path, out_vid_name in zip(vid_paths, out_vid_names):
                 loc = [round(i, 2) for i in loc]
 
                 text = str(loc)  # display 3D location
-                text_postion = tuple(
-                    result['projected_points'][0].astype(int) + (bright_crop_box[0], bright_crop_box[2]))  # display on the top of cube
+                if detect_bright_roi:
+                    text_postion = tuple(result['projected_points'][0].astype(int) +
+                                         (bright_crop_box[0], bright_crop_box[2]) +
+                                         [20, -5])
+                else:
+                    text_postion = tuple(result['projected_points'][0].astype(int) + [20, -5])
                 cv2.putText(img_draw, text, text_postion, font, txt_size, (0, 255, 0), txt_line_width, cv2.LINE_AA)
 
         # Put frame details on image
