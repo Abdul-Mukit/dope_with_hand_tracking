@@ -4,7 +4,6 @@ from cuboid import *
 from detector_dope import *
 import yaml
 
-import pyrealsense2 as rs
 
 from PIL import Image
 from PIL import ImageDraw
@@ -14,6 +13,7 @@ import time
 import cv2
 import utils_orgyolo as uyolo
 from darknet import Darknet
+from PIL import ImageFont
 
 
 ### Code to visualize the neural network output
@@ -123,7 +123,11 @@ def adjust_gamma(image, gamma=1.0):
 # Settings
 #######################################################
 # vid_path = r"C:\Users\Ghost\Downloads\Amm\Azure_Kinect_Captures_1\outputAutoExposure.mkv"
-vid_path = r"C:\Users\Ghost\Downloads\Amm\Azure_Kinect_Captures_1\outputE10.mkv"
+vid_path = "/media/mukit/Transcend/Datasets/Azure Kinect Captures 1/outputAutoExposure.mkv"
+out_vid_name = "outputAutoExposure_1920_test.avi"
+
+test_resize_width = 1920
+test_resize_height = 1080
 
 use_hand_tracking = False
 gamma_correction = False # Always False in case of webcam. I don't have exposure control in webcam
@@ -134,20 +138,21 @@ pose_conf_thresh = 0.5
 hand_conf_thresh = 0.6
 gamma_val = 2
 
-test_width = 640
-test_height = 480
+
+yolo_img_width = 640
+yolo_img_height = 480
 
 use_cuda = True
 
 datacfg = {'hands':   'cfg/hands.data'}
 
 cfgfile = {'hands':   'cfg/yolo-hands.cfg',
-           'cautery': 'cfg/my_config_webcam.yaml'} #
+           'cautery': 'cfg/my_config_AzKinect.yaml'} # Set only for Azure Kinect Camera
 
 weightfile = {'hands':   'backup/hands/000500.weights'}
 
 namesfile = {'hands': 'data/hands.names'}
-
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 #######################################################
 # Setting up YOLO-hand
@@ -225,19 +230,20 @@ with open(yaml_path, 'r') as stream:
 #######################################################
 
 cap = cv2.VideoCapture(vid_path)
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter(out_vid_name, fourcc, 30.0, (test_resize_width, test_resize_height))
+
 frame_number = 0
 
-while True:
+while cap.isOpened():
     # Reading image from camera
     t_start = time.time()
     ret, img = cap.read()
     if ret:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     else:
-        continue
-    new_width = 1280//2
-    new_height = 720//2
-    img = cv2.resize(img, (new_width,new_height))
+        break
+    img = cv2.resize(img, (test_resize_width, test_resize_height))
     # Gamma(Optional) Correction
     if gamma_correction:
         img = adjust_gamma(img, gamma=gamma_val)
@@ -247,7 +253,7 @@ while True:
         sized = cv2.resize(img, (model_hand.width, model_hand.height))
         bboxes = uyolo.do_detect(model_hand, sized, hand_conf_thresh, 0.4, use_cuda)
         if any(bboxes):
-            center = [int(bboxes[0][0] * test_width), int(bboxes[0][1] * test_height)]
+            center = [int(bboxes[0][0] * yolo_img_width), int(bboxes[0][1] * yolo_img_height)]
             img_hand_cropped, crop_box = crop_image(img, center, hand_crop_size)
             img_detection = img_hand_cropped
             # print(crop_box[3])
@@ -278,9 +284,6 @@ while True:
                 continue
             loc = result["location"]
             ori = result["quaternion"]
-            if print_detections:
-                print("Frame: ", frame_number, "location ", loc, "quaternion ", ori)
-
 
             # Draw the cube
             if None not in result['projected_points']:
@@ -297,14 +300,28 @@ while True:
         img_draw = img
         cv2.rectangle(img_draw, (crop_box[0],crop_box[2]), (crop_box[1],crop_box[3]), color=(0,255,0))
 
-
-
-
-
     img_draw = cv2.cvtColor(img_draw, cv2.COLOR_RGB2BGR)
 
+    # Printing texts
+    if print_detections:
+        txt_y_offset = 100
+        cv2.putText(img_draw, 'Input size: '+ str(test_resize_height) + 'p', (10, txt_y_offset-75), font, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+        cv2.putText(img_draw, "Frame: " + str(frame_number), (10, txt_y_offset-40), font, 0.5, (0, 255, 0), 1, cv2.LINE_AA)
+
+        for i_r, result in enumerate(results):
+            if result["location"] is None:
+                continue
+            loc = result["location"]
+            ori = result["quaternion"]
+            loc = [round(i,2) for i in loc]
+
+            text = str(loc) # display 3D location
+            text_postion = tuple(result['projected_points'][0].astype(int) + [20, -5])  # display on the top of cube
+            cv2.putText(img_draw, text, text_postion, font, 0.7, (0, 255, 0), 1, cv2.LINE_AA)
 
     cv2.imshow('Open_cv_image', img_draw)
+    out.write(img_draw)
+
     frame_number += 1
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -312,7 +329,10 @@ while True:
     t_end = time.time()
     # print('Overall FPS: {}, DOPE fps: {}'.format(1/(t_end-t_start), 1/(t_end_dope-t_start_dope)))
 
-
+# Release everything if job is finished
+cap.release()
+out.release()
+cv2.destroyAllWindows()
 
 
 
